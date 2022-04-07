@@ -22,7 +22,7 @@ router.post("/signup", async function (req, res) {
   })
   /////// if he's already record the error is diplayed ///////
   if ( userdata != null ){
-    error.push('cet utilisateur est déja présent')
+    error.push('cet utilisateur est déja présent 🥴')
     console.log(userdata)
   }
   /////// check server side validation ///////
@@ -31,9 +31,9 @@ router.post("/signup", async function (req, res) {
     || req.body.lastname === ''
     || req.body.password === '' 
     ){
-      error.push('veuillez verifier vos informations')
+      error.push('veuillez verifier vos informations 😵')
     } else if (req.body.password.length < 6) {
-      error.push('votre mot de passe doit contenir au moins 6 caractères')
+      error.push('votre mot de passe doit contenir au moins 6 caractères 6️⃣')
     }
   /////// if everything is alright, the user is send to DB ///////
   if (error.length === 0) {

@@ -37,7 +37,9 @@ const Login = (props) => {
    
 
     let errorsIn = errors.map((err, i) => {
-        return <Badge pill className="d-flex align-items-center justify-content-center mt-3 h-100 text-black" bg="warning" key={i}>{err}</Badge>
+        return <h4 key={i}>
+                    <Badge pill bg="warning" className="d-flex align-items-center justify-content-center mt-3 h-100 text-black">{err}</Badge>
+                </h4>
     })
     console.log("errors", errors)
 

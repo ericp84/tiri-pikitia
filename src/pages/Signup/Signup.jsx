@@ -32,7 +32,9 @@ const Signup = () => {
         }, [nav, userExist])
 
     let errorsUp = errors.map((err, i)=> {
-        return <Badge pill className="text-center mt-5" bg="danger" key={i}>{err}</Badge>
+        return <h4 key={i}>
+                    <Badge pill bg="danger" className="d-flex align-items-center justify-content-center mt-3 h-100">{err}</Badge>
+                </h4>
     })
     return (
         <>
@@ -89,8 +91,8 @@ const Signup = () => {
                                 />
                         </div>
                         <div className="d-grid gap-2">
+                            <button  style={{borderRadius: 50}} type="submit" className="btn btn-success mt-5" onClick={(e)=>handleRegister(e.preventDefault())}>Créer le compte</button>
                             {errorsUp}
-                            <button  type="submit" className="btn btn-success mt-5" onClick={(e)=>handleRegister(e.preventDefault())}>Créer le compte</button>
                         </div>
                     </form>
                 </div>
