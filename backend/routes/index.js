@@ -16,16 +16,16 @@ router.post("/signup", async function (req, res) {
   let token = null;
   let hash = bcrypt.hashSync(req.body.password, 10);
 
-  /////// check if the user is already register in DB ///////
+  /////// CHECK IF THE USER IS ALREADY REGISTERED IN DB ///////
   const userdata = await userModel.findOne({
     email: req.body.email
   })
-  /////// if he's already record the error is diplayed ///////
+  /////// IF HE IS ALREADY RESGISTERED DISPLAY ERROR MESSAGE ///////
   if ( userdata != null ){
     error.push('cet utilisateur est déja présent 🥴')
     console.log(userdata)
   }
-  /////// check server side validation ///////
+  /////// CHECK SERVER SIDE VALIDATIONS ///////
   if( req.body.email === '' 
     || req.body.firstname === '' 
     || req.body.lastname === ''
@@ -35,7 +35,7 @@ router.post("/signup", async function (req, res) {
     } else if (req.body.password.length < 6) {
       error.push('votre mot de passe doit contenir au moins 6 caractères 6️⃣')
     }
-  /////// if everything is alright, the user is send to DB ///////
+  /////// IF EVERYTHING IS OK SAVE USER IN DB ///////
   if (error.length === 0) {
     let userSignup = new userModel({
     email: req.body.email,
@@ -63,22 +63,28 @@ router.post('/login', async function (req, res) {
   let token = null;
 
 /////// SERVER SIDE VALIDATIONS /////// 
-  if(req.body.password === '' || req.body.email === ''
-    ){
-      error.push('Veuillez vérifier vos informations ❗')
+  if (req.body.password === '' ) {
+    error.push('Apparement vous avez oublié de renseigner votre mot de passe 🥶')
+  } else if( req.body.email === ''){
+      error.push("Désolé je n'ai pas réussi à lire votre email 😕, votre email a-t-il bien été renseigné ❓")
     }
 /////// IF EVERYTHING IS OK USER IS COMPARED TO DB RECORDS ///////
   if(error.length === 0) {
     user = await userModel.findOne({
       email : req.body.email
     })
-/////// THEN CHECK IF THE PASSWORD MATCH WITH THE RECORDED PASSWORD IN DB ///////      
-    if(bcrypt.compareSync(req.body.password, user.password)) {
-      result =true;
+  }
+  if(user) {
+    const cryptPass = bcrypt.compareSync(req.body.password, user.password)
+    if(cryptPass) {
+      result = true;
       token = user.token;
     } else {
-      error.push('veuillez vérifier vos informations ❗')
+      result = false;
+      error.push('Oops, vos identifiants ne semblent pas correspondre ❗');
     }
+  } else {
+    error.push("🤔 je n'ai pas reconnu votre email, avez vous un compte ❓")
   }
   res.json({result, user, error, token})
 })
