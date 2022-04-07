@@ -57,7 +57,6 @@ const Login = (props) => {
                             name="email"  
                             placeholder="Adresse mail"
                             onChange={(e)=>setEmail(e.target.value)}
-                            autoComplete="current-email"
                         />
                     </div>
                     <div className="form-group mt-5">
@@ -83,7 +82,7 @@ const Login = (props) => {
                         <a href="/">Mot de passe oublié ?</a>
                     </div>
                     <div className="d-grid gap-2">
-                        <button  style={{borderRadius: 50}} type="submit" className="btn btn-primary mt-5" onClick={(e)=>handleLogin(e.preventDefault())} formNoValidate>Connexion</button>
+                        <button  style={{borderRadius: 50}} type="submit" className="btn btn-primary mt-5" onClick={(e)=>handleLogin(e.preventDefault())} >Connexion</button>
                         {errorsIn}
                     </div>
                 </form>

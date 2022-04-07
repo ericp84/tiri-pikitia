@@ -77,7 +77,7 @@ router.post('/login', async function (req, res) {
     })
   }
   if(user) {
-    userMail = true
+    userMail = user.email
     const cryptPass = bcrypt.compareSync(req.body.password, user.password)
     if(cryptPass) {
       result = true;
@@ -86,10 +86,8 @@ router.post('/login', async function (req, res) {
       result = false;
       error.push(variables.loginFalsePassword);
     }
-  } else if (userMail !== req.body.email) {
-    error.push(variables.loginFalseMail)
   } else  {
-    // error.push('cool else 91')
+    error.push(variables.loginFalseMail)
   }
   res.json({result, user, error, token})
 })
