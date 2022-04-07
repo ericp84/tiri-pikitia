@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+var variables = require ('../utils/ErrorHandler.json');
 var express = require('express');
 var router = express.Router();
 ///// MODELS /////
@@ -22,8 +24,7 @@ router.post("/signup", async function (req, res) {
   })
   /////// IF HE IS ALREADY RESGISTERED DISPLAY ERROR MESSAGE ///////
   if ( userdata != null ){
-    error.push('cet utilisateur est déja présent 🥴')
-    console.log(userdata)
+    error.push(variables.userExist)
   }
   /////// CHECK SERVER SIDE VALIDATIONS ///////
   if( req.body.email === '' 
@@ -31,9 +32,9 @@ router.post("/signup", async function (req, res) {
     || req.body.lastname === ''
     || req.body.password === '' 
     ){
-      error.push('veuillez verifier vos informations 😵')
+      error.push(variables.signupMissingInformations)
     } else if (req.body.password.length < 6) {
-      error.push('votre mot de passe doit contenir au moins 6 caractères 6️⃣')
+      error.push(variables.signupPasswordLength)
     }
   /////// IF EVERYTHING IS OK SAVE USER IN DB ///////
   if (error.length === 0) {
@@ -61,12 +62,13 @@ router.post('/login', async function (req, res) {
   let user = null;
   let error = [];
   let token = null;
+  let userMail = false
 
 /////// SERVER SIDE VALIDATIONS /////// 
   if (req.body.password === '' ) {
-    error.push('Apparement vous avez oublié de renseigner votre mot de passe 🥶')
-  } else if( req.body.email === ''){
-      error.push("Désolé je n'ai pas réussi à lire votre email 😕, votre email a-t-il bien été renseigné ❓")
+    error.push(variables.loginMissingPassword)
+  } if( req.body.email === ''){
+      error.push(variables.loginMissingMail)
     }
 /////// IF EVERYTHING IS OK USER IS COMPARED TO DB RECORDS ///////
   if(error.length === 0) {
@@ -75,16 +77,19 @@ router.post('/login', async function (req, res) {
     })
   }
   if(user) {
+    userMail = true
     const cryptPass = bcrypt.compareSync(req.body.password, user.password)
     if(cryptPass) {
       result = true;
       token = user.token;
     } else {
       result = false;
-      error.push('Oops, vos identifiants ne semblent pas correspondre ❗');
+      error.push(variables.loginFalsePassword);
     }
-  } else {
-    error.push("🤔 je n'ai pas reconnu votre email, avez vous un compte ❓")
+  } else if (userMail !== req.body.email) {
+    error.push(variables.loginFalseMail)
+  } else  {
+    // error.push('cool else 91')
   }
   res.json({result, user, error, token})
 })
