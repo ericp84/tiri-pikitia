@@ -37,7 +37,7 @@ const Login = (props) => {
    
 
     let errorsIn = errors.map((err, i) => {
-        return <Badge className="text-center mt-5" color="danger" key={i}>{err}</Badge>
+        return <Badge pill className="d-flex align-items-center justify-content-center mt-3 h-100 text-black" bg="warning" key={i}>{err}</Badge>
     })
     console.log("errors", errors)
 
@@ -81,9 +81,9 @@ const Login = (props) => {
                         </div>
                         <a href="/">Mot de passe oublié ?</a>
                     </div>
-                    {errorsIn}
                     <div className="d-grid gap-2">
-                        <button type="submit" className="btn btn-primary mt-5" onClick={(e)=>handleLogin(e.preventDefault())} formNoValidate>Connexion</button>
+                        <button  style={{borderRadius: 50}} type="submit" className="btn btn-primary mt-5" onClick={(e)=>handleLogin(e.preventDefault())} formNoValidate>Connexion</button>
+                        {errorsIn}
                     </div>
                 </form>
             </div>

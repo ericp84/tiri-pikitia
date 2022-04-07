@@ -65,7 +65,7 @@ router.post('/login', async function (req, res) {
 /////// SERVER SIDE VALIDATIONS /////// 
   if(req.body.password === '' || req.body.email === ''
     ){
-      error.push('Veuillez vérifier vos informations')
+      error.push('Veuillez vérifier vos informations ❗')
     }
 /////// IF EVERYTHING IS OK USER IS COMPARED TO DB RECORDS ///////
   if(error.length === 0) {
@@ -77,7 +77,7 @@ router.post('/login', async function (req, res) {
       result =true;
       token = user.token;
     } else {
-      error.push('veuillez vérifier vos informations')
+      error.push('veuillez vérifier vos informations ❗')
     }
   }
   res.json({result, user, error, token})
