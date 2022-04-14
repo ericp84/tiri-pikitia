@@ -77,7 +77,6 @@ router.post('/login', async function (req, res) {
     })
   }
   if(user) {
-    userMail = user.email
     const cryptPass = bcrypt.compareSync(req.body.password, user.password)
     if(cryptPass) {
       result = true;
@@ -109,5 +108,7 @@ router.get('/recuppins', async function (req, res) {
   let savedPin = await pinsModel.find();
   res.json({savedPin})
 })
+
+/// UPLOAD PINS ON CLOUDINARY ///
 
 module.exports = router;
