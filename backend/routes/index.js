@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+require('dotenv').config()
 var variables = require ('../utils/ErrorHandler.json');
 var express = require('express');
 var router = express.Router();
@@ -110,5 +111,12 @@ router.get('/recuppins', async function (req, res) {
 })
 
 /// UPLOAD PINS ON CLOUDINARY ///
+router.post('/upload', async function (req, res) {
+  cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.API_KEY, 
+    api_secret: process.env.API_KEY 
+  });
+})
 
 module.exports = router;
