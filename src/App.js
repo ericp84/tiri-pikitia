@@ -1,8 +1,8 @@
 import {Routes, Route, BrowserRouter} from  'react-router-dom';
-import Login from './pages/Login/Login';
-import Signup from './pages/Signup/Signup';
-import Home from './pages/Home/Home';
-import Profil from './pages/Profil/Profil';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Home from './components/Home';
+import Profil from './components/Profil';
 import {Provider} from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import {store, persistor} from './configureStore'

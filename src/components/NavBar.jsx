@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 
 const NavBar = (props) => {
 
-    const [token, setToken] = useState(props.token)
+    const [token] = useState(props.token)
 
     const isAuth =  
     <>
