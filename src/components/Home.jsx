@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Card, Button} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import storage from 'redux-persist/lib/storage';
 import NavBar from './NavBar';
 
 
