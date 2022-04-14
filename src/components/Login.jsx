@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Badge} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
-import {connect} from 'redux';
+import {connect} from 'react-redux';
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -24,10 +24,11 @@ const Login = (props) => {
                 return nav("/login")
             } else {            
                 setUserExist(true)
-                console.log(userIn.token)        
+                console.log("toktok",userIn.token)        
                 console.log(userIn.user.firstName)        
                 props.addPseudo(userIn.user.firstName)
                 props.addToken(userIn.token)
+
             }
         }
         useEffect(()=> {
@@ -36,7 +37,6 @@ const Login = (props) => {
         }
         }, [nav, userExist])
    
-
     let errorsIn = errors.map((err, i) => {
         return <h4 key={i}>
                     <Badge pill bg="warning" className="d-flex align-items-center justify-content-center mt-3 h-100 text-black">{err}</Badge>
@@ -96,9 +96,15 @@ const Login = (props) => {
 function mapDispatchToProps(dispatch) {
     return {
         addPseudo: function(pseudo) {
-            
+            dispatch({type: 'addPseudo', pseudo: pseudo})
+        },
+        addToken: function(token) {
+            dispatch({type: 'addToken', token:token})
         }
     }
 }
 
-export default Login;
+export default connect(
+    null, 
+    mapDispatchToProps
+)(Login);

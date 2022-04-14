@@ -8,7 +8,6 @@ import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Nav/>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
