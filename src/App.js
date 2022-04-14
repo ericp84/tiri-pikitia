@@ -8,7 +8,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import {store, persistor} from './configureStore'
 
 
-
 function App() {
   return (
   <Provider store={store}>
