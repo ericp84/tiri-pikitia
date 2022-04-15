@@ -30,11 +30,22 @@ const Home = (props) => {
         )
     })
 
+    const handleUpload = async () => {
+        var request = await fetch('http://192.168.1.105:3000/upload', {
+            method: 'POST',
+        })
+        var response = await request.json()
+        console.log(response)
+    }
     return (
         <>
         <NavBar/>
             <h1 className='text-center m-5'>Découvrez les meilleurs pins du monde {props.Username} ! 🌎</h1>
                 <div className="row">
+                    <form action="">
+                        <input type="file" name="" id="" />
+                        <button type="submit" onClick={handleUpload}>envoyer</button>
+                    </form>
                     <div className="col-md-8 d-flex justify-content-center w-100 mt-5 flex-wrap">
                         {pin}
                     </div>
