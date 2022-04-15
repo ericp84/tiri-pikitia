@@ -9,6 +9,15 @@ const pinsModel = require ('../models/pins');
 ///// SECURITY /////
 const bcrypt = require('bcrypt');
 const uid2 = require('uid2');
+const uniqid = require('uniqid');
+///// CLOUDINARY /////
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({ 
+  cloud_name: process.env.CLOUD_NAME, 
+  api_key: process.env.API_KEY, 
+  api_secret: process.env.API_KEY 
+});
 
 ///// SIGNUP /////
 router.post("/signup", async function (req, res) {
@@ -63,7 +72,6 @@ router.post('/login', async function (req, res) {
   let user = null;
   let error = [];
   let token = null;
-  let userMail = false
 
 /////// SERVER SIDE VALIDATIONS /////// 
   if (req.body.password === '' ) {
@@ -112,11 +120,9 @@ router.get('/recuppins', async function (req, res) {
 
 /// UPLOAD PINS ON CLOUDINARY ///
 router.post('/upload', async function (req, res) {
-  cloudinary.config({ 
-    cloud_name: process.env.CLOUD_NAME, 
-    api_key: process.env.API_KEY, 
-    api_secret: process.env.API_KEY 
-  });
+  let pictureName = './tmp' + uniqid() + '.jpg';
+  let resultCopy = await cloudinary.uploader.upload(pictureName);
+  res.json({url: resultCloudinary.url, resultCopy})
 })
 
 module.exports = router;
