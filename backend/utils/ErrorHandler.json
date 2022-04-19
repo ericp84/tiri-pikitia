@@ -10,5 +10,4 @@
     "loginMissingMail": "Désolé je n'ai pas réussi à lire votre email 😕, votre email a-t-il bien été renseigné ❓",
     "loginFalseMail": "🤔 je n'ai pas reconnu votre email, avez vous un compte ❓",
     "loginFalsePassword": "Oops, vos identifiants ne semblent pas correspondre ❗"
-
 }

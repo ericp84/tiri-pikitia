@@ -9,9 +9,12 @@ const pinsModel = require ('../models/pins');
 ///// SECURITY /////
 const bcrypt = require('bcrypt');
 const uid2 = require('uid2');
-const uniqid = require('uniqid');
 ///// CLOUDINARY /////
 const cloudinary = require('cloudinary').v2;
+
+var fs = require('fs');
+var request = require('sync-request');
+var uniqid = require('uniqid');
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
@@ -103,11 +106,14 @@ router.post('/login', async function (req, res) {
 ///// PINS CREATE /////
 router.post('/pins', async function(req, res) {
   let pins = new pinsModel({
+    id: string,
     title: req.body.title,
     description: req.body.description,
     imageName: req.body.imageName,
-    URL: req.body.url
+    URL: req.body.url,
+    userId: req.body.token
   })
+  console.log(req.body.url)
 let newpin = await pins.save()
 res.json({newpin})
 })
@@ -118,11 +124,32 @@ router.get('/recuppins', async function (req, res) {
   res.json({savedPin})
 })
 
+/// DELETE PINS ///
+router.delete('/pins/:_id', async function(req, res) {
+  let delPin = await pinsModel.deleteOne({
+    id: req.params.id
+  })
+  console.log("req.params.id == ", req.params._id)
+  console.log(delPin)
+  console.log(delPin.deletedCount)
+  let result = false;
+if(delPin.deletedCount == 1) {
+  result = true
+} else { result = false}
+
+  res.json({result})
+})
+
 /// UPLOAD PINS ON CLOUDINARY ///
 router.post('/upload', async function (req, res) {
-  let pictureName = './tmp' + uniqid() + '.jpg';
-  let resultCopy = await cloudinary.uploader.upload(pictureName);
-  res.json({url: resultCloudinary.url, resultCopy})
+  var resultCopy = await req.files.file;
+  console.log(resultCopy)
+
+  if(!resultCopy) {
+    var resultCloudinary = await cloudinary.uploader.upload();
+  }
+  res.json({url: resultCloudinary.url})
+  console.log(resultCloudinary.url)
 })
 
 module.exports = router;

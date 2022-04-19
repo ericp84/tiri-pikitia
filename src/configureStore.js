@@ -4,10 +4,12 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import Username from './Reducers/Username';
 import token from './Reducers/Token';
+import pins from './Reducers/Pins';
 
 const reducer = combineReducers({
     Username: Username,
-    token: token
+    token: token,
+    pins: pins
 })
 const persistConfig = {
   key: ['Username', 'token'],

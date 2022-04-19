@@ -24,8 +24,6 @@ const Login = (props) => {
                 return nav("/login")
             } else {            
                 setUserExist(true)
-                console.log("toktok",userIn.token)        
-                console.log(userIn.user.firstName)        
                 props.addPseudo(userIn.user.firstName)
                 props.addToken(userIn.token)
 

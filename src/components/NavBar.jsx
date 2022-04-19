@@ -10,6 +10,7 @@ const NavBar = (props) => {
     const isAuth =  
     <>
         <Nav.Link href="/profil">Profil</Nav.Link>
+        <Nav.Link href="/pins_create">Créer un Pin</Nav.Link>
         <Nav.Link href="/" onClick={()=>storage.removeItem('persist:Username,token')}>Déconnexion</Nav.Link>
     </> 
     const isGuest = 
