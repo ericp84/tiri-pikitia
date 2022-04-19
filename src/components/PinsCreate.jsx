@@ -7,13 +7,12 @@ const PinsCreate = (props) => {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [imageName, setImageName] = useState();
-    const [imageSelected, setImageSelected] = useState();
+    const [imageSelected] = useState();
 
     const pinsCreation = async () => {
         const formData = new FormData();
         formData.append('file', {
             type:'image/jpeg',
-            name:'mescouilles.jpg'
         });
 
         // await fetch('https://api.cloudinary.com/v1_1/ericcloud/image/upload', {
@@ -75,7 +74,7 @@ const PinsCreate = (props) => {
                                 />
                         </div>
                         <div className="d-grid gap-2">
-                            <button  style={{borderRadius: 50}} type="submit" className="btn btn-success mt-5" onClick={pinsCreation}>Créer le Pin</button>
+                            <a href="/" className='btn btn-success mt-5' style={{borderRadius: 50}} onClick={pinsCreation}>Créer le Pin</a>
                         </div>
                     </form>
                 </div>

@@ -7,11 +7,12 @@ const Pins = (props) => {
     console.log("id from front", id)
    console.log("props pins",props.pins)
 
-   const handleDelete = async (id) => {
+        const handleDelete = async (id) => {
        await fetch(`http://192.168.1.105:3000/pins/${id}`, {
            method: 'DELETE'
        })
    }
+
     return (
         <>
         <Navbar/>
@@ -20,7 +21,7 @@ const Pins = (props) => {
                 <div className="col-md-6 mx-auto d-flex justify-content-center overflow-hidden mt-5 p-5">
                     <article className="pin bg-light rounded shadow w-50 ">
                         <div className="mw-25 rounded-top overflow-hidden align-items-center justify-content-center d-flex">
-                            <img src="../../purple-flowers.png" alt="" className="w-100 rounded" />
+                            <img src={props.pins.imageName} alt="" className="w-100 rounded" />
                         </div>
                         <div className="p-3 text-center">
                             <h1 className="h5 text-secondary text-decoration-none">{props.pins.title}</h1>
@@ -33,7 +34,7 @@ const Pins = (props) => {
                             {props.pins.description}
                             </p>
                             <div className="py-3">
-                                <a href="#" className='btn btn-info m-3'>edit</a>
+                                <a href="pins" className='btn btn-info m-3'>edit</a>
                                 <a href="/" className='btn btn-danger m-3' onClick={()=>handleDelete(id)}>delete</a>
                             </div>
                         </div>

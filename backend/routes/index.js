@@ -12,9 +12,9 @@ const uid2 = require('uid2');
 ///// CLOUDINARY /////
 const cloudinary = require('cloudinary').v2;
 
-var fs = require('fs');
-var request = require('sync-request');
-var uniqid = require('uniqid');
+// var fs = require('fs');
+// var request = require('sync-request');
+// var uniqid = require('uniqid');
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
@@ -106,14 +106,13 @@ router.post('/login', async function (req, res) {
 ///// PINS CREATE /////
 router.post('/pins', async function(req, res) {
   let pins = new pinsModel({
-    id: string,
     title: req.body.title,
     description: req.body.description,
     imageName: req.body.imageName,
     URL: req.body.url,
     userId: req.body.token
   })
-  console.log(req.body.url)
+  console.log("req.body.imageName == ",req.body.imageName)
 let newpin = await pins.save()
 res.json({newpin})
 })
@@ -133,7 +132,7 @@ router.delete('/pins/:_id', async function(req, res) {
   console.log(delPin)
   console.log(delPin.deletedCount)
   let result = false;
-if(delPin.deletedCount == 1) {
+if(delPin.deletedCount === 1) {
   result = true
 } else { result = false}
 
