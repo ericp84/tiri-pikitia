@@ -18,7 +18,6 @@ const Login = (props) => {
                 body: `email=${email}&password=${password}`
             })
             const userIn = await user.json();
-            console.log("userin json", userIn);
             if(!userIn.result) {
                 setErrors(userIn.error)
                 return nav("/login")
@@ -40,7 +39,6 @@ const Login = (props) => {
                     <Badge pill bg="warning" className="d-flex align-items-center justify-content-center mt-3 h-100 text-black">{err}</Badge>
                 </h4>
     })
-    console.log("errors", errors)
     return (
         <>
         <h1 className='text-center mt-5'>Connectez vous 😀</h1>

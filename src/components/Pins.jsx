@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 const Pins = (props) => {
     const [id] = useState(props.pins._id);
-    console.log("id from front", id)
-   console.log("props pins",props.pins)
 
         const handleDelete = async (id) => {
        await fetch(`http://192.168.1.105:3000/pins/${id}`, {

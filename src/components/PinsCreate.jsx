@@ -1,54 +1,59 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from './NavBar';
 import {connect} from 'react-redux';
-import Add from './UploadInput'
+import {useNavigate} from 'react-router-dom';
 
 const PinsCreate = (props) => {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
-    const [imageName, setImageName] = useState();
-    const [imageSelected] = useState();
+    const [imageName, setImageName] = useState('');
+    const [imageSelected, setImageSelected] = useState();
 
-    const pinsCreation = async () => {
+    let nav = useNavigate();
+
+
+    const pinsCreation =  async(e) => {
+        e.preventDefault()
         const formData = new FormData();
-        formData.append('file', {
-            type:'image/jpeg',
-        });
+        formData.append('file', imageSelected);
 
-        // await fetch('https://api.cloudinary.com/v1_1/ericcloud/image/upload', {
-        //     method: "POST",
-        //     body: formData
-        // })
-        await fetch('http://192.168.1.105:3000/pins', {
-            method:'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `title=${title}&description=${description}&imageName=${imageName}&userId=${props.token}`
-        })
+        const uploadRequest = await fetch(
+            'http://192.168.1.105:3000/upload', 
+            {
+                method:'POST',
+                body: formData
+            })
+            const uploadResponse = await uploadRequest.json()
+            setImageName(uploadResponse.cloudres.secure_url)
+
+        nav('/')
         
-
-
     }
-    console.log('title', title)
-    console.log('description', description)
-    console.log('imageSelected', imageSelected)
+    useEffect(()=> {
+        async function fetchdata ()  {
 
+        await fetch(
+            'http://192.168.1.105:3000/pins', 
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `title=${title}&description=${description}&imageName=${imageName}`
+            }
+        )
+        }
+    }, [description, imageName, title])
+
+    console.log("imageName", imageName)
 
     return (
         <>
         <Navbar/>
-        <Add/>
-
         <div className="row">
                 <div className="col-md-6 mx-auto m-5">
                     <h1 className='text-center mb-5'>{props.Username} c'est le moment de créer votre plus beau pin ! 💓 </h1>
-                    <form>
                         <input type="file"
-                        className='form-control'
-                        id='file'
                         name='file'
-                        onChange={(e)=>
-                            setImageName(e.target.value)
-                        }
+                        onChange={(e)=>setImageSelected(e.target.files[0])}                      
                         />
                         <div className="form-group mt-3">
                             <label htmlFor="titre">Titre</label>
@@ -74,9 +79,8 @@ const PinsCreate = (props) => {
                                 />
                         </div>
                         <div className="d-grid gap-2">
-                            <a href="/" className='btn btn-success mt-5' style={{borderRadius: 50}} onClick={pinsCreation}>Créer le Pin</a>
+                            <button className='btn btn-success mt-5' style={{borderRadius: 50}} onClick={pinsCreation}>Créer le Pin</button>
                         </div>
-                    </form>
                 </div>
             </div>
         </>

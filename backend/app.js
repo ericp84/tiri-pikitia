@@ -8,8 +8,11 @@ require('./models/connexion');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var fileUpload = require('express-fileupload');
 
 var app = express();
+app.use(fileUpload());
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

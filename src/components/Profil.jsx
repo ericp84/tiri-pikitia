@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import NavBar from './NavBar';
 
 const Profil = (props) => {
-    console.log(props.Username)
     return (
         <>
             <NavBar/>

@@ -13,14 +13,11 @@ const Home = (props) => {
             const pinstart = await fetch ('http://192.168.1.105:3000/recuppins')
             const displayPins = await pinstart.json();
             setPins(displayPins.savedPin);
-            console.log("1",displayPins.savedPin)
         }
         pini()
     }, [])
     let pin;
-    // console.log('pins', Pins[0]._id)
     Pins.length === 0 ? pin = <div className="col-md-6 mx-auto text-center"><p>pas de pins à afficher</p></div> : pin = Pins.map((p) => {
-        console.log(p._id)
         return (
         <Card className="rounded shadow p-3 bg-light rounded" style={{ width: '15rem', margin: 25 }} key={p._id}>
             <Card.Img variant="top" src={p.URL}  style={{borderBottomRightRadius: "0.25rem", borderBottomLeftRadius: "0.25rem"}}/>
