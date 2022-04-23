@@ -33,6 +33,7 @@ const Home = (props) => {
 
         )
     })
+    console.log(id)
     return (
         <>
         <NavBar/>

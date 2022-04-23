@@ -3,7 +3,7 @@ import Navbar from './NavBar';
 import {connect} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 
-const PinsCreate = (props) => {
+const PinsCreate =  (props) => {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [imageName, setImageName] = useState('');
@@ -11,9 +11,8 @@ const PinsCreate = (props) => {
 
     let nav = useNavigate();
 
-
-    const pinsCreation =  async(e) => {
-        e.preventDefault()
+        const pinsCreation =  async (e) => {
+            e.preventDefault()
         const formData = new FormData();
         formData.append('file', imageSelected);
 
@@ -25,12 +24,13 @@ const PinsCreate = (props) => {
             })
             const uploadResponse = await uploadRequest.json()
             setImageName(uploadResponse.cloudres.secure_url)
-
-        nav('/')
-        
     }
-    useEffect(()=> {
-        async function fetchdata ()  {
+
+    console.log("imageName reques cloudinary == ", imageName )
+
+
+    const handlePins = async(e) => {
+        e.preventDefault()
 
         await fetch(
             'http://192.168.1.105:3000/pins', 
@@ -40,17 +40,17 @@ const PinsCreate = (props) => {
                 body: `title=${title}&description=${description}&imageName=${imageName}`
             }
         )
-        }
-    }, [description, imageName, title])
+        nav('/')      
+    }                 
 
-    console.log("imageName", imageName)
 
     return (
         <>
         <Navbar/>
-        <div className="row">
+            <div className="row">
                 <div className="col-md-6 mx-auto m-5">
                     <h1 className='text-center mb-5'>{props.Username} c'est le moment de créer votre plus beau pin ! 💓 </h1>
+                    <form>
                         <input type="file"
                         name='file'
                         onChange={(e)=>setImageSelected(e.target.files[0])}                      
@@ -79,8 +79,9 @@ const PinsCreate = (props) => {
                                 />
                         </div>
                         <div className="d-grid gap-2">
-                            <button className='btn btn-success mt-5' style={{borderRadius: 50}} onClick={pinsCreation}>Créer le Pin</button>
+                            <button type="submit" className='btn btn-success mt-5' style={{borderRadius: 50}} onClick={handlePins} >Créer le Pin</button>
                         </div>
+                    </form>
                 </div>
             </div>
         </>
