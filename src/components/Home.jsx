@@ -20,10 +20,10 @@ const Home = (props) => {
     Pins.length === 0 ? pin = <div className="col-md-6 mx-auto text-center"><p>pas de pins à afficher</p></div> : pin = Pins.map((p) => {
         return (
         <Card className="rounded shadow p-3 bg-light rounded" style={{ width: '15rem', margin: 25 }} key={p._id}>
-            <Card.Img variant="top" src={p.URL}  style={{borderBottomRightRadius: "0.25rem", borderBottomLeftRadius: "0.25rem"}}/>
+            <Card.Img variant="top" src={p.imageName}  style={{borderBottomRightRadius: "0.25rem", borderBottomLeftRadius: "0.25rem"}}/>
             <Card.Body style={{display: "flex", flexDirection: "column"}}>
-            <Card.Title style={{marginLeft: 5}}>{p.title}</Card.Title>
-            <Card.Text className='text-muted' style={{marginLeft: 5}}>{p.description}</Card.Text>
+            <Card.Title  className='text-truncate' style={{marginLeft: 5}}>{p.title}</Card.Title>
+            <Card.Text className='text-muted text-truncate' style={{marginLeft: 5}}>{p.description}</Card.Text>
             <a className="btn btn-success" href={`/pins/${id}`} onClick={()=>{
                 setId(p._id)
                 props.addPins(p)

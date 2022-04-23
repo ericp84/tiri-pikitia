@@ -115,8 +115,6 @@ router.get('/recuppins', async function (req, res) {
 
 /// DELETE PINS ///
 router.delete('/pins/:_id', async function(req, res) {
-  console.log("req params id",req.params._id)
-
   let delPin = await pinsModel.deleteOne({
     _id: req.params._id
   })
@@ -130,6 +128,21 @@ if(delPin.deletedCount === 1) {
 
 ///// PINS CREATE /////
 router.post('/pins', async function(req, res) {
+  let error = [];
+  // if(req.body.title === "undefined" || req.body.title.length < 3) {
+  //   error.push('votre titre doit contenir au moins 3 caractères')
+  // }
+
+  req.body.title === "undefined" || req.body.title.length < 3 
+  ? error.push("votre titre doit contenir au moins 3 caractères") 
+  : error = [];
+
+  req.body.description === "undefined" || req.body.description.length < 10
+  ? error.push("La description de votre pin doit contenir au moins 10 caractères")
+  : error = [];
+
+console.log(req.body.title.length)
+
   let pins = new pinsModel({
     title: req.body.title,
     description: req.body.description,
@@ -138,7 +151,7 @@ router.post('/pins', async function(req, res) {
     userId: req.body.token
   })
 let newpin = await pins.save()
-res.json({newpin})
+res.json({newpin, error})
 })
 
 /// UPLOAD PINS ON CLOUDINARY ///

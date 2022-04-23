@@ -8,11 +8,32 @@ const PinsCreate =  (props) => {
     const [description, setDescription] = useState();
     const [imageName, setImageName] = useState('');
     const [imageSelected, setImageSelected] = useState();
+    const [error, setError] = useState([])
 
     let nav = useNavigate();
 
-        const pinsCreation =  async (e) => {
-            e.preventDefault()
+    const handlePins = async(e) => {
+        e.preventDefault()
+        const pinsCreateRequest = await fetch(
+            'http://192.168.1.105:3000/pins', 
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: `title=${title}&description=${description}&imageName=${imageName}`
+            }    
+        )
+        const pinsCreateResponse = await pinsCreateRequest.json()
+        if(pinsCreateResponse) {
+            setError(pinsCreateResponse.error)
+            console.log("pinsCreateResponse === ", pinsCreateResponse)
+            console.log(pinsCreateResponse.error)
+        }
+        
+        nav('/pins_create')      
+    }   
+       
+    useEffect(()=> {
+        const pinsCreation =  async () => {
         const formData = new FormData();
         formData.append('file', imageSelected);
 
@@ -25,23 +46,14 @@ const PinsCreate =  (props) => {
             const uploadResponse = await uploadRequest.json()
             setImageName(uploadResponse.cloudres.secure_url)
     }
+    pinsCreation()
+    }, [imageSelected])
 
-    console.log("imageName reques cloudinary == ", imageName )
-
-
-    const handlePins = async(e) => {
-        e.preventDefault()
-
-        await fetch(
-            'http://192.168.1.105:3000/pins', 
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `title=${title}&description=${description}&imageName=${imageName}`
-            }
+    let errorMsg = error.map((err,i) => {
+        return (
+            <h5  className=' mt-3' key={i}>{err}</h5>
         )
-        nav('/')      
-    }                 
+    });
 
 
     return (
@@ -77,6 +89,8 @@ const PinsCreate =  (props) => {
                                 style={{height: 100}}
                                 onChange={(e)=>setDescription(e.target.value)} 
                                 />
+                                                        {errorMsg}
+
                         </div>
                         <div className="d-grid gap-2">
                             <button type="submit" className='btn btn-success mt-5' style={{borderRadius: 50}} onClick={handlePins} >Créer le Pin</button>
