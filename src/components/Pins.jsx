@@ -7,9 +7,16 @@ const Pins = (props) => {
     console.log(id)
 
         const handleDelete = async (id) => {
-       await fetch(`http://192.168.1.105:3000/pins/${id}`, {
-           method: 'DELETE'
-       })
+            await fetch(`http://192.168.1.105:3000/pins/${id}`, {
+                method: 'DELETE'
+            })
+   }
+
+   const handleChange = async (id) => {
+       await fetch(`http://192.168.1.105:3000/pins_edit/${id}`, {
+           method: 'PUT'
+       }
+       )
    }
 
     return (
@@ -33,7 +40,7 @@ const Pins = (props) => {
                             {props.pins.description}
                             </p>
                             <div className="">
-                                <a href="pins" className='btn btn-primary  m-2 w-25'>Edit </a>
+                                <a href="/pins_edit/:_id" className='btn btn-primary  m-2 w-25' onClick={()=>handleChange(id)}>Edit </a>
                                 <a href="/" className='btn btn-warning  m-2 w-25' onClick={()=>handleDelete(id)}>Delete</a>
                             </div>
                         </div>

@@ -29,7 +29,7 @@ const PinsCreate =  (props) => {
             console.log(pinsCreateResponse.error)
         }
         
-        nav('/pins_create')      
+        nav('/')      
     }   
        
     useEffect(()=> {

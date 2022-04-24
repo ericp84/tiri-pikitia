@@ -1,7 +1,6 @@
 let mongoose = require('mongoose');
 
 let pinsSchema = mongoose.Schema({
-    id: String,
     title: String,
     description: String,
     imageName: String,

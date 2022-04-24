@@ -22,8 +22,6 @@ cloudinary.config({
   api_key: process.env.API_KEY, 
   api_secret: process.env.API_SECRET 
 });
-console.log(process.env.CLOUD_NAME)
-console.log(process.env.API_KEY)
 
 ///// SIGNUP /////
 router.post("/signup", async function (req, res) {
@@ -141,8 +139,6 @@ router.post('/pins', async function(req, res) {
   ? error.push("La description de votre pin doit contenir au moins 10 caractères")
   : error = [];
 
-console.log(req.body.title.length)
-
   let pins = new pinsModel({
     title: req.body.title,
     description: req.body.description,
@@ -172,6 +168,19 @@ router.post('/upload', async function (req, res) {
 } catch (err) {
   console.log(err)
 }
+})
+
+/// UPDATE PINS ///
+router.put('/pins_edit/:_id', async function(req,res) {
+  const pinsEdit = await pinsModel.findById({
+    _id: req.params._id,
+    // title: req.body.title,
+    // description: req.body.description,
+    // imageName: req.body.imageName
+
+  })
+  console.log(req.params._id)
+  res.json({pinsEdit})
 })
 
 module.exports = router;
