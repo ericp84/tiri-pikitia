@@ -4,7 +4,8 @@ import Navbar from './NavBar';
 
 
 const PinsEdit = (props) => {
-    const [id, setId] = useState(props.pins._id)
+    
+    console.log("id from update", props.pins._id)
 
     return (
         <>

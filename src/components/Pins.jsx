@@ -12,8 +12,8 @@ const Pins = (props) => {
             })
    }
 
-   const handleChange = async (id) => {
-       await fetch(`http://192.168.1.105:3000/pins_edit/${id}`, {
+   const handleChange = async () => {
+       await fetch(`http://192.168.1.105:3000/pins_edit/${props.pins._id}`, {
            method: 'PUT'
        }
        )
@@ -40,7 +40,7 @@ const Pins = (props) => {
                             {props.pins.description}
                             </p>
                             <div className="">
-                                <a href="/pins_edit/:_id" className='btn btn-primary  m-2 w-25' onClick={()=>handleChange(id)}>Edit </a>
+                                <a href="/pins_edit/:_id" className='btn btn-primary  m-2 w-25' onClick={()=>handleChange()}>Edit </a>
                                 <a href="/" className='btn btn-warning  m-2 w-25' onClick={()=>handleDelete(id)}>Delete</a>
                             </div>
                         </div>
