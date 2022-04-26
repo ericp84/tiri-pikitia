@@ -1,11 +1,47 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import Navbar from './NavBar';
 
 
 const PinsEdit = (props) => {
+    const [title, setTitle] = useState();
+    const [description, setDescription] = useState();
+    const [imageName, setImageName] = useState('');
+    const [imageSelected, setImageSelected] = useState();
+    const [error, setError] = useState([])
     
     console.log("id from update", props.pins._id)
+
+    const handleChange = async(e) => {
+        e.preventDefault()
+        const change = await fetch(`http://192.168.1.105:3000/pins_edit/${props.pins._id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `title=${title}&description=${description}&imageName=${imageName}`
+        })
+        const changeresponse = await change.json()
+        console.log("change ==", changeresponse)
+        console.log("title ==", title)
+        console.log("description ==", description)
+    }
+
+    useEffect(()=> {
+        const pinsCreation =  async () => {
+        const formData = new FormData();
+        formData.append('file', imageSelected);
+
+        const uploadRequest = await fetch(
+            'http://192.168.1.105:3000/upload', 
+            {
+                method:'POST',
+                body: formData
+            })
+            const uploadResponse = await uploadRequest.json()
+            setImageName(uploadResponse.cloudres.secure_url)
+        }
+        pinsCreation()
+    }, [imageSelected])
+
 
     return (
         <>
@@ -16,6 +52,7 @@ const PinsEdit = (props) => {
                     <form>
                         <input type="file"
                         name='file'
+                        onChange={(e)=>setImageSelected(e.target.files[0])}                      
                         />
                         <div className="form-group mt-3">
                             <label htmlFor="titre">Nouveau titre</label>
@@ -24,7 +61,8 @@ const PinsEdit = (props) => {
                                 className="form-control" 
                                 id="titre" 
                                 name="titre" 
-                                placeholder="Titre de votre pin" 
+                                placeholder="Titre de votre pin"
+                                onChange={(e)=>setTitle(e.target.value)} 
                             />
                         </div>
                         <div className="form-group mt-3">
@@ -36,11 +74,12 @@ const PinsEdit = (props) => {
                                 name="description" 
                                 placeholder="description"
                                 style={{height: 100}}
+                                onChange={(e)=>setDescription(e.target.value)} 
                                 />
 
                         </div>
                         <div className="d-grid gap-2">
-                            <button type="submit" className='btn btn-warning mt-5' style={{borderRadius: 50}} >Valider les modifications du pin</button>
+                            <button type="submit" className='btn btn-warning mt-5' style={{borderRadius: 50}} onClick={handleChange}>Valider les modifications du pin</button>
                         </div>
                     </form>
                 </div>

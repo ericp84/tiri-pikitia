@@ -127,9 +127,6 @@ if(delPin.deletedCount === 1) {
 ///// PINS CREATE /////
 router.post('/pins', async function(req, res) {
   let error = [];
-  // if(req.body.title === "undefined" || req.body.title.length < 3) {
-  //   error.push('votre titre doit contenir au moins 3 caractères')
-  // }
 
   req.body.title === "undefined" || req.body.title.length < 3 
   ? error.push("votre titre doit contenir au moins 3 caractères") 
@@ -172,17 +169,26 @@ router.post('/upload', async function (req, res) {
 
 /// UPDATE PINS ///
 router.put('/pins_edit/:_id', async function(req,res) {
-  // const pinsEdit = await pinsModel.findById({
-  //   _id: req.params._id
-  // })
+  try {
+      const pinsEdit = await pinsModel.updateOne({
+      _id: req.params._id,
+      title: req.body.title,
+      description: req.body.description,
+      imageName: req.body.imageName
 
-  const pinsEdit = await pinsModel.findByIdAndUpdate({
-    title: req.body.title,
-    description: req.body.description,
-    imageName: req.body.imageName
   })
-  console.log("PINS EDIT ===", pinsEdit)
+
+  // const pinsEdit = await pinsModel.findByIdAndUpdate({
+  //   _id: req.params._id,
+  //   title: req.body.title,
+  //   description: req.body.description,
+  //   imageName: req.body.imageName
+  // })
+  // console.log("PINS EDIT ===", pinsEdit)
   res.json({pinsEdit})
+  } catch (err) {
+    console.log(err)
+  } 
 })
 
 module.exports = router;
