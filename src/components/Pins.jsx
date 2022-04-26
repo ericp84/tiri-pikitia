@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import Navbar from './NavBar';
 import { connect } from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+
 
 const Pins = (props) => {
     const [id] = useState(props.pins._id);
-    console.log(id)
+    let nav = useNavigate();
 
-        const handleDelete = async (id) => {
-            await fetch(`http://192.168.1.105:3000/pins/${id}`, {
-                method: 'DELETE'
-            })
-   }
+    const handleDelete = async (id) => {
+        await fetch(`http://192.168.1.105:3000/pins/${id}`, {
+            method: 'DELETE'
+        })
+        nav("/");
+    }
 
    const handleChange = async () => {
        await fetch(`http://192.168.1.105:3000/pins_edit/${props.pins._id}`, {
@@ -41,7 +44,7 @@ const Pins = (props) => {
                             </p>
                             <div className="">
                                 <a href="/pins_edit/:_id" className='btn btn-primary  m-2 w-25' onClick={()=>handleChange()}>Edit </a>
-                                <a href="/" className='btn btn-warning  m-2 w-25' onClick={()=>handleDelete(id)}>Delete</a>
+                                <button className='btn btn-warning  m-2 w-25' onClick={()=>handleDelete(id)}>Delete</button>
                             </div>
                         </div>
                     </article>

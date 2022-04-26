@@ -27,9 +27,8 @@ const PinsCreate =  (props) => {
             setError(pinsCreateResponse.error)
             console.log("pinsCreateResponse === ", pinsCreateResponse)
             console.log(pinsCreateResponse.error)
+            nav('/')      
         }
-        
-        nav('/')      
     }   
        
     useEffect(()=> {
@@ -45,8 +44,8 @@ const PinsCreate =  (props) => {
             })
             const uploadResponse = await uploadRequest.json()
             setImageName(uploadResponse.cloudres.secure_url)
-    }
-    pinsCreation()
+        }
+        pinsCreation()
     }, [imageSelected])
 
     let errorMsg = error.map((err,i) => {
