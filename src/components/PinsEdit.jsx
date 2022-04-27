@@ -1,28 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import Navbar from './NavBar';
+import {useNavigate} from 'react-router-dom';
 
 
 const PinsEdit = (props) => {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [imageName, setImageName] = useState('');
-    const [imageSelected, setImageSelected] = useState();
-    const [error, setError] = useState([])
-    
-    console.log("id from update", props.pins._id)
+    const [imageSelected, setImageSelected] = useState();  
+
+    let nav = useNavigate();
 
     const handleChange = async(e) => {
         e.preventDefault()
-        const change = await fetch(`http://192.168.1.105:3000/pins_edit/${props.pins._id}`, {
+        await fetch(`http://192.168.1.105:3000/pins_edit/${props.pins._id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: `title=${title}&description=${description}&imageName=${imageName}`
         })
-        const changeresponse = await change.json()
-        console.log("change ==", changeresponse)
-        console.log("title ==", title)
-        console.log("description ==", description)
+        nav('/')
     }
 
     useEffect(()=> {

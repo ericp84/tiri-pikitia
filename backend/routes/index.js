@@ -170,21 +170,11 @@ router.post('/upload', async function (req, res) {
 /// UPDATE PINS ///
 router.put('/pins_edit/:_id', async function(req,res) {
   try {
-      const pinsEdit = await pinsModel.updateOne({
-      _id: req.params._id,
+      const pinsEdit = await pinsModel.findByIdAndUpdate({_id:req.params._id}, {
       title: req.body.title,
       description: req.body.description,
       imageName: req.body.imageName
-
   })
-
-  // const pinsEdit = await pinsModel.findByIdAndUpdate({
-  //   _id: req.params._id,
-  //   title: req.body.title,
-  //   description: req.body.description,
-  //   imageName: req.body.imageName
-  // })
-  // console.log("PINS EDIT ===", pinsEdit)
   res.json({pinsEdit})
   } catch (err) {
     console.log(err)
