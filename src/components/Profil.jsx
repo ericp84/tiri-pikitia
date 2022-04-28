@@ -13,6 +13,7 @@ const Profil = (props) => {
                 <div className="col-md-6 mx-auto text-center">
                     <h1 className="my-5">Profil de {props.Username}</h1>
                     <img src={gravatarUrl} alt="purple" className=' rounded-circle shadow-lg w-25'/>
+                    <p><small><a href="https://fr.gravatar.com/" className='text-decoration-none text-muted'> créez votre propre avatar ici !</a></small></p>
                     <h2 className="m-5">{props.Username}</h2>
                     <h2 className="m-5">{props.email}</h2>
                     <p className='text-muted'><small>compte actif depuis le (date)</small></p>
