@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-require('dotenv').config()
+require('dotenv').config();
 var variables = require ('../utils/ErrorHandler.json');
 var express = require('express');
 var router = express.Router();
@@ -11,8 +11,6 @@ const bcrypt = require('bcrypt');
 const uid2 = require('uid2');
 ///// CLOUDINARY /////
 const cloudinary = require('cloudinary').v2;
-
-
 var fs = require('fs');
 // var request = require('sync-request');
 var uniqid = require('uniqid');

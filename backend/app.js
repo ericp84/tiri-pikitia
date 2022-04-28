@@ -1,3 +1,4 @@
+var gravatar = require('gravatar');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -13,7 +14,7 @@ var fileUpload = require('express-fileupload');
 var app = express();
 app.use(fileUpload());
 
-
+var secureUrl = gravatar.url('example@gmail.com', {s: 100, r: 'x', d:'retro'})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
