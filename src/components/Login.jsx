@@ -24,6 +24,7 @@ const Login = (props) => {
             } else {            
                 setUserExist(true)
                 props.addPseudo(userIn.user.firstName)
+                props.addEmail(userIn.user.email)
                 props.addToken(userIn.token)
 
             }
@@ -96,6 +97,9 @@ function mapDispatchToProps(dispatch) {
         },
         addToken: function(token) {
             dispatch({type: 'addToken', token:token})
+        },
+        addEmail: function(email) {
+            dispatch({type: 'addEmail', email: email})
         }
     }
 }
