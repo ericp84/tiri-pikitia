@@ -6,12 +6,14 @@ import Username from './Reducers/Username';
 import token from './Reducers/Token';
 import pins from './Reducers/Pins';
 import email from './Reducers/Email';
+import date from './Reducers/Date';
 
 const reducer = combineReducers({
     Username: Username,
     token: token,
     pins: pins,
-    email: email
+    email: email,
+    date: date
 })
 const persistConfig = {
   key: ['Username', 'token'],

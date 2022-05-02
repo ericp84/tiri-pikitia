@@ -45,7 +45,7 @@ const PinsEdit = (props) => {
             <Navbar/>
             <div className="row">
                 <div className="col-md-6 mx-auto m-5">
-                    <h1 className='text-center mb-5'> Modifiez votre pin {props.pins._id}</h1>
+                    <h1 className='text-center mb-5'> Modifiez votre pin {props.Username}</h1>
                     <form>
                         <input type="file"
                         name='file'
@@ -86,7 +86,8 @@ const PinsEdit = (props) => {
 };
 function mapStateToProps(state) {
     return {
-        pins: state.pins
+        pins: state.pins,
+        Username: state.Username
     }
 }
 

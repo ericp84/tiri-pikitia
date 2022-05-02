@@ -18,6 +18,7 @@ const Login = (props) => {
                 body: `email=${email}&password=${password}`
             })
             const userIn = await user.json();
+            console.log(userIn)
             if(!userIn.result) {
                 setErrors(userIn.error)
                 return nav("/login")
@@ -26,8 +27,9 @@ const Login = (props) => {
                 props.addPseudo(userIn.user.firstName)
                 props.addEmail(userIn.user.email)
                 props.addToken(userIn.token)
-
+                props.addDate(userIn.user.createdAt)
             }
+            console.log(userIn.user.createdAt)
         }
         useEffect(()=> {
         if(userExist) {
@@ -100,6 +102,9 @@ function mapDispatchToProps(dispatch) {
         },
         addEmail: function(email) {
             dispatch({type: 'addEmail', email: email})
+        },
+        addDate : function(date) {
+            dispatch({type: 'addDate', date: date})
         }
     }
 }

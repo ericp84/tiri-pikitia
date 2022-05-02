@@ -6,7 +6,8 @@ let userSchema = mongoose.Schema({
     lastName: String,
     password: String,
     token: String,
-    role: String
+    role: String,
+    createdAt: {type: Date, default: Date.now},
 })
 
 let userModel = mongoose.model('users', userSchema);

@@ -55,7 +55,7 @@ router.post("/signup", async function (req, res) {
     firstName: req.body.firstname,
     lastName: req.body.lastname,
     password: hash,
-    token: uid2(32)
+    token: uid2(32),
     })
     newUser = await userSignup.save()  
     if(newUser) {
