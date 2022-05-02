@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Badge} from 'react-bootstrap';
 import {useNavigate} from 'react-router-dom';
 import {connect} from 'react-redux';
+import Navbar from './NavBar';
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -44,6 +45,7 @@ const Login = (props) => {
     })
     return (
         <>
+        <Navbar/>
         <h1 className='text-center mt-5'>Connectez vous 😀</h1>
         <div className="row">
             <div className="col-md-6 mx-auto m-5">
@@ -79,7 +81,7 @@ const Login = (props) => {
                                 <label htmlFor="remember_me" className="form-check-label">Souvenez vous de moi</label>
                             </div>
                         </div>
-                        <a href="/">Mot de passe oublié ?</a>
+                        <a href="/forgot-password">Mot de passe oublié ?</a>
                     </div>
                     <div className="d-grid gap-2">
                         <button  style={{borderRadius: 50}} type="submit" className="btn btn-primary mt-5" onClick={(e)=>handleLogin(e.preventDefault())} >Connexion</button>

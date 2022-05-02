@@ -6,7 +6,11 @@ const gravatar = require('gravatar');
 // let nd = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
 // console.log(nd)
 const Profil = (props) => {
-    console.log(props.date)
+    // const utc = new Date(props.date)
+    // utc.setUTCHours(0)
+    // let x = Date.now()
+    // let diffdays = (x - utc) / (24* 36000 * 1000) 
+    // console.log(diffdays)
 
     let gravatarUrl = gravatar.url(props.email)+'?s=500&d=identicon'
     return (
@@ -21,7 +25,7 @@ const Profil = (props) => {
                     <h2 className="m-5">{props.email}</h2>
                     <p className='text-muted'><small>compte actif depuis le {props.date} </small></p>
                     <p className='btn btn-warning m-3 w-25'>Modifier votre compte </p>
-                    <p className='btn btn-warning m-3 w-25'>Changer votre mot de passe </p>
+                    <a href="/reset-password" className='btn btn-warning m-3 w-25' >Changer votre mot de passe </a>
                 </div>
             </div>
         </>  

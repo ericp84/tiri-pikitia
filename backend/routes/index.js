@@ -21,14 +21,20 @@ cloudinary.config({
   api_secret: process.env.API_SECRET 
 });
 
+let date = new Date();
+let d = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()
+
 ///// SIGNUP /////
 router.post("/signup", async function (req, res) {
 
-  let newUser= null;
+  var newUser= null;
   let result = false
   let error = []
   let token = null;
   let hash = bcrypt.hashSync(req.body.password, 10);
+
+
+  console.log("date = ", date)
 
   /////// CHECK IF THE USER IS ALREADY REGISTERED IN DB ///////
   const userdata = await userModel.findOne({
@@ -56,6 +62,7 @@ router.post("/signup", async function (req, res) {
     lastName: req.body.lastname,
     password: hash,
     token: uid2(32),
+    createdAt: d
     })
     newUser = await userSignup.save()  
     if(newUser) {
@@ -84,7 +91,7 @@ router.post('/login', async function (req, res) {
   if(error.length === 0) {
     user = await userModel.findOne({
       email : req.body.email
-    })
+    }).populate('owner')
   }
   if(user) {
     const cryptPass = bcrypt.compareSync(req.body.password, user.password)
@@ -139,7 +146,9 @@ router.post('/pins', async function(req, res) {
     description: req.body.description,
     imageName: req.body.imageName,
     URL: req.body.url,
-    userId: req.body.token
+    userId: req.body.token,
+    createdAt: d,
+    owner: [newUser.id]
   })
 let newpin = await pins.save()
 res.json({newpin, error})

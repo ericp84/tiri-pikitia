@@ -5,8 +5,9 @@ let pinsSchema = mongoose.Schema({
     description: String,
     imageName: String,
     URL: String,
-    createdAt: Date,
-    updatedAt: Date
+    createdAt: String,
+    updatedAt: String,
+    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'users'}
 })
 
 let pinsModel = mongoose.model('pins', pinsSchema);

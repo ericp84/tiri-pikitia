@@ -36,7 +36,7 @@ const Pins = (props) => {
                             <h4 className="text-truncate">{props.pins.title}</h4>
                             <p className="text-muted">
                                 <small>
-                                    submitted (date) by {props.Username}
+                                    submitted {props.date} by {props.Username}
                                 </small>
                             </p>
                             <p className="text-break">
@@ -56,7 +56,8 @@ const Pins = (props) => {
 function mapStateToProps(state) {
     return {
         pins: state.pins,
-        Username: state.Username
+        Username: state.Username,
+        date: state.date
     }
 }
 
