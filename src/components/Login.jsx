@@ -18,8 +18,9 @@ const Login = (props) => {
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 body: `email=${email}&password=${password}`
             })
+
             const userIn = await user.json();
-            console.log(userIn)
+            console.log(userIn.user._id)
             if(!userIn.result) {
                 setErrors(userIn.error)
                 return nav("/login")

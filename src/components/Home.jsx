@@ -13,7 +13,6 @@ const Home = (props) => {
             const pinstart = await fetch ('http://192.168.1.105:3000/recuppins')
             const displayPins = await pinstart.json();
             setPins(displayPins.savedPin);
-            console.log(Pins)
         }
         pini()
     }, [])

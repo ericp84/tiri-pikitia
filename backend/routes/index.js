@@ -23,7 +23,7 @@ cloudinary.config({
 
 let date = new Date();
 let d = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear()
-
+var user = null;
 ///// SIGNUP /////
 router.post("/signup", async function (req, res) {
 
@@ -77,7 +77,6 @@ router.post("/signup", async function (req, res) {
 router.post('/login', async function (req, res) {
 
   let result = false;
-  let user = null;
   let error = [];
   let token = null;
 
@@ -91,7 +90,7 @@ router.post('/login', async function (req, res) {
   if(error.length === 0) {
     user = await userModel.findOne({
       email : req.body.email
-    }).populate('owner')
+    })
   }
   if(user) {
     const cryptPass = bcrypt.compareSync(req.body.password, user.password)
@@ -105,6 +104,7 @@ router.post('/login', async function (req, res) {
   } else  {
     error.push(variables.loginFalseMail)
   }
+  console.log(user._id)
   res.json({result, user, error, token})
 })
 
@@ -112,7 +112,7 @@ router.post('/login', async function (req, res) {
 
 /// GET ALL PINS ON DB WHEN OPENING APP /////
 router.get('/recuppins', async function (req, res) {
-  let savedPin = await pinsModel.find();
+  let savedPin = await pinsModel.find()
   res.json({savedPin})
 })
 
@@ -126,13 +126,12 @@ if(delPin.deletedCount === 1) {
   result = true
 } else { result = false}
 
-  res.json({result})
+  res.json({result, userid})
 })
 
 ///// PINS CREATE /////
 router.post('/pins', async function(req, res) {
   let error = [];
-
   req.body.title === "undefined" || req.body.title.length < 3 
   ? error.push("votre titre doit contenir au moins 3 caractères") 
   : error = [];
@@ -140,15 +139,13 @@ router.post('/pins', async function(req, res) {
   req.body.description === "undefined" || req.body.description.length < 10
   ? error.push("La description de votre pin doit contenir au moins 10 caractères")
   : error = [];
-
   let pins = new pinsModel({
     title: req.body.title,
     description: req.body.description,
     imageName: req.body.imageName,
     URL: req.body.url,
-    userId: req.body.token,
     createdAt: d,
-    owner: [newUser.id]
+    id: req.body.token
   })
 let newpin = await pins.save()
 res.json({newpin, error})

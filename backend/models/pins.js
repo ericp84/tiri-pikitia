@@ -1,13 +1,13 @@
 let mongoose = require('mongoose');
 
 let pinsSchema = mongoose.Schema({
+    users: {type: mongoose.Schema.Types.ObjectId, ref: 'users'},
     title: String,
     description: String,
     imageName: String,
     URL: String,
     createdAt: String,
     updatedAt: String,
-    owner: {type: mongoose.Schema.Types.ObjectId, ref: 'users'}
 })
 
 let pinsModel = mongoose.model('pins', pinsSchema);
