@@ -7,7 +7,7 @@ import NavBar from './NavBar';
 const Home = (props) => {
     const [Pins, setPins] = useState([]);
     const [id, setId] = useState()
-
+    console.log(sessionStorage.getItem(""))
     useEffect(()=> {
         const pini = async() => {
             const pinstart = await fetch ('http://192.168.1.105:3000/recuppins')
@@ -16,6 +16,7 @@ const Home = (props) => {
         }
         pini()
     }, [])
+
     let pin;
     Pins.length === 0 ? pin = <div className="col-md-6 mx-auto text-center"><p>pas de pins à afficher</p></div> : pin = Pins.map((p) => {
         return (

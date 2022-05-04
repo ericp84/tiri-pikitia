@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import storage from 'redux-persist/lib/storage';
 
 const NavBar = (props) => {
 
@@ -11,7 +10,7 @@ const NavBar = (props) => {
     <>
         <Nav.Link href="/profil">Profil</Nav.Link>
         <Nav.Link href="/pins_create">Créer un Pin</Nav.Link>
-        <Nav.Link href="/" onClick={()=>storage.removeItem('persist:Username,token')}>Déconnexion</Nav.Link>
+        <Nav.Link href="/" onClick={()=>sessionStorage.clear()}>Déconnexion</Nav.Link>
     </> 
     const isGuest = 
     <>

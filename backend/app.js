@@ -11,8 +11,13 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var fileUpload = require('express-fileupload');
 
+var session = require('express-session')
+
+
 var app = express();
 app.use(fileUpload());
+app.use(session({secret: 'keyboard cat', cookie: {maxAge: 6000}}))
+
 
 var secureUrl = gravatar.url('example@gmail.com', {s: 100, r: 'x', d:'retro'})
 // view engine setup

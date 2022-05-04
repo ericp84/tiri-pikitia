@@ -14,6 +14,7 @@ const cloudinary = require('cloudinary').v2;
 var fs = require('fs');
 // var request = require('sync-request');
 var uniqid = require('uniqid');
+const session = require('express-session');
 
 cloudinary.config({ 
   cloud_name: process.env.CLOUD_NAME, 
@@ -33,8 +34,8 @@ router.post("/signup", async function (req, res) {
   let token = null;
   let hash = bcrypt.hashSync(req.body.password, 10);
 
-
-  console.log("date = ", date)
+  var pins = await pinsModel.find()
+  var userx = await userModel.find().populate('pins')
 
   /////// CHECK IF THE USER IS ALREADY REGISTERED IN DB ///////
   const userdata = await userModel.findOne({
@@ -70,7 +71,7 @@ router.post("/signup", async function (req, res) {
     token = newUser.token;
     }
   }
-  res.json({newUser, result, error, token})
+  res.json({newUser, result, error, token, pins, userx})
 })
 
 ///// LOGIN /////
@@ -113,6 +114,7 @@ router.post('/login', async function (req, res) {
 /// GET ALL PINS ON DB WHEN OPENING APP /////
 router.get('/recuppins', async function (req, res) {
   let savedPin = await pinsModel.find()
+
   res.json({savedPin})
 })
 
@@ -126,12 +128,17 @@ if(delPin.deletedCount === 1) {
   result = true
 } else { result = false}
 
-  res.json({result, userid})
+  res.json({result})
 })
 
 ///// PINS CREATE /////
 router.post('/pins', async function(req, res) {
   let error = [];
+  console.log(req.session)
+  let userx = await userModel.findById(req.session)
+  // userx.map((id)=>console.log("USERX MAP ID === >",id))
+  let pinx = await pinsModel.find().populate('users')
+
   req.body.title === "undefined" || req.body.title.length < 3 
   ? error.push("votre titre doit contenir au moins 3 caractères") 
   : error = [];
@@ -145,10 +152,14 @@ router.post('/pins', async function(req, res) {
     imageName: req.body.imageName,
     URL: req.body.url,
     createdAt: d,
-    id: req.body.token
+    id: req.body.token,
+    users: req.body.id
   })
+  
 let newpin = await pins.save()
-res.json({newpin, error})
+
+
+res.json({newpin, error, userx, pinx})
 })
 
 /// UPLOAD PINS ON CLOUDINARY ///

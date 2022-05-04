@@ -12,6 +12,8 @@ let mongoose = require('mongoose');
 //           console.log(d)
 
 let userSchema = mongoose.Schema({
+    pins: [{type: mongoose.Schema.Types.ObjectId, ref: 'pins'}],
+    _id: String,
     email: String,
     firstName: String,
     lastName: String,

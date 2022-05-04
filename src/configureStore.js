@@ -1,24 +1,26 @@
 import { createStore, combineReducers } from 'redux'
 import { persistStore, persistReducer } from 'redux-persist'
-// import storageSession from 'redux-persist/lib/storage/session' /// could be stored in session
+import storageSession from 'redux-persist/lib/storage/session' /// could be stored in session
 import storage from 'redux-persist/lib/storage'
 import Username from './Reducers/Username';
 import token from './Reducers/Token';
 import pins from './Reducers/Pins';
 import email from './Reducers/Email';
 import date from './Reducers/Date';
+import id from './Reducers/Id';
 
 const reducer = combineReducers({
     Username: Username,
     token: token,
     pins: pins,
     email: email,
-    date: date
+    date: date,
+    id: id,
 })
 const persistConfig = {
   key: ['Username', 'token'],
-  storage,
-//   storage: storageSession, /// session storage configuration
+  
+  storage: storageSession, /// session storage configuration
 }
 
 const persistedReducer = persistReducer(persistConfig, reducer)

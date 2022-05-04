@@ -27,6 +27,7 @@ const Login = (props) => {
             } else {            
                 setUserExist(true)
                 props.addPseudo(userIn.user.firstName)
+                props.addId(userIn.user._id)
                 props.addEmail(userIn.user.email)
                 props.addToken(userIn.token)
                 props.addDate(userIn.user.createdAt)
@@ -108,7 +109,10 @@ function mapDispatchToProps(dispatch) {
         },
         addDate : function(date) {
             dispatch({type: 'addDate', date: date})
-        }
+        },
+        addId: function(id) {
+            dispatch({type:'addId', id: id})
+        },
     }
 }
 

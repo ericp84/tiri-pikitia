@@ -8,6 +8,7 @@ const Pins = (props) => {
     const [id] = useState(props.pins._id);
     let nav = useNavigate();
 
+
     const handleDelete = async (id) => {
         await fetch(`http://192.168.1.105:3000/pins/${id}`, {
             method: 'DELETE'

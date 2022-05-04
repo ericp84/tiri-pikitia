@@ -9,7 +9,9 @@ const PinsCreate =  (props) => {
     const [imageName, setImageName] = useState('');
     const [imageSelected, setImageSelected] = useState();
     const [error, setError] = useState([])
+    const [id] = useState(props.id)
 
+    console.log("PROPS.ID ===>",id)
     let nav = useNavigate();
 
     const handlePins = async(e) => {
@@ -19,14 +21,13 @@ const PinsCreate =  (props) => {
             {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `title=${title}&description=${description}&imageName=${imageName}`
+                body: `&users:${id}&title=${title}&description=${description}&imageName=${imageName}`
             }    
         )
         const pinsCreateResponse = await pinsCreateRequest.json()
         if(pinsCreateResponse) {
             setError(pinsCreateResponse.error)
-            console.log("pinsCreateResponse === ", pinsCreateResponse)
-            console.log(pinsCreateResponse.error)
+            console.log("pinsCreateResponse === ", pinsCreateResponse.userx)
             nav('/')      
         }
     }   
@@ -101,7 +102,10 @@ const PinsCreate =  (props) => {
     );
 }
 function mapStateToProps (state) {
-    return {Username: state.Username}
+    return {
+        Username: state.Username,
+        id: state.id    
+    }
 }
 
 export default connect (
